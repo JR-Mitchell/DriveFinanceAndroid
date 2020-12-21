@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriveFinance</string>
+    <string name="toolbar_top_text">Test Screen</string>
+    <string name="open_side_menu">Open side menu</string>
+</resources>

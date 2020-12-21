@@ -1,0 +1,1 @@
+The drawable icon ic_baseline_menu_24.xml is from [Material Design](https://material.io/resources/icons/), and is licensed under the [Apache License V2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).

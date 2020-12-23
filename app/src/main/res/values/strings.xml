@@ -3,4 +3,9 @@
     <string name="app_name">DriveFinance</string>
     <string name="toolbar_top_text">Test Screen</string>
     <string name="open_side_menu">Open side menu</string>
+    <string name="not_logged_in_text">Not yet logged into Google Drive</string>
+    <string name="already_logged_in_text">Already logged into Google Drive</string>
+    <string name="now_logged_in_text">Now logged into Google Drive</string>
+    <string name="login_failed_text">Failed to log in to drive</string>
+    <string name="retry">Retry</string>
 </resources>

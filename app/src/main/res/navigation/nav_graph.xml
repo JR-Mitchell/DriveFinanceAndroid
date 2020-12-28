@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph.xml"
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
@@ -20,7 +19,14 @@
         android:id="@+id/loggedInFragment"
         android:name="com.jrmitchell.drivefinance.fragments.LoggedInFragment"
         android:label="logged_in_fragment"
-        tools:layout="@layout/logged_in_fragment" />
+        tools:layout="@layout/logged_in_fragment" >
+        <action
+            android:id="@+id/action_loggedInFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_loggedInFragment_to_folderLoadedFragment"
+            app:destination="@id/folderLoadedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/failedLoginFragment"
         android:name="com.jrmitchell.drivefinance.fragments.FailedLoginFragment"
@@ -29,5 +35,17 @@
         <action
             android:id="@+id/action_failedLoginFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/folderLoadedFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.FolderFragment"
+        android:label="folder_loaded_fragment"
+        tools:layout="@layout/folder_loaded_fragment">
+        <action
+            android:id="@+id/action_folderLoadedFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_folderLoadedFragment_to_loggedInFragment"
+            app:destination="@id/loggedInFragment" />
     </fragment>
 </navigation>

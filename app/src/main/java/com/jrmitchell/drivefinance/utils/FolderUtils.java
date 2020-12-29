@@ -1,8 +1,12 @@
 package com.jrmitchell.drivefinance.utils;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.api.services.drive.model.File;
+import com.jrmitchell.drivefinance.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +35,22 @@ public class FolderUtils {
         return  SINGLETON_INSTANCE;
     }
 
-
     public boolean driveFolderNeedsSelecting() {
-        return !isDriveFolderSelected;
+        return  !isDriveFolderSelected;
     }
 
-    public void selectDriveFolder(String folderName, SigninCallback callback) {
+    public void checkDriveFolderNeedsSelecting(Fragment fragment, SigninCallback callback) {
+        if (isDriveFolderSelected) callback.success();
+        else {
+            //If there is a shared preference folder name, select it
+            SharedPreferences sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+            String folderName = sharedPref.getString(fragment.getString(R.string.folder_name_lookup_key), null);
+            if (folderName != null) selectDriveFolder(folderName, fragment, callback);
+            else callback.failure();
+        }
+    }
+
+    public void selectDriveFolder(String folderName, Fragment fragment, SigninCallback callback) {
         driveUtils.queryFiles(intent -> { }, "name = '" + folderName + "'")
             .addOnSuccessListener(fileList -> {
                 List<File> files = fileList.getFiles();
@@ -47,6 +61,11 @@ public class FolderUtils {
                         }
                     }
                     if (files.size() == 1) {
+                        //Write to shared preferences
+                        SharedPreferences sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(fragment.getString(R.string.folder_name_lookup_key),folderName);
+                        editor.apply();
                         isDriveFolderSelected = true;
                         driveFolderId = files.get(0).getId();
                         refreshFolderFiles(callback);
@@ -63,7 +82,6 @@ public class FolderUtils {
                     if (!(files == null || files.isEmpty())) {
                         for (File file : files) {
                             String name = file.getName();
-                            if (name != null) Log.d("DriveFinanceName",name);
                             fileDict.put(file.getName(),file.getId());
                         }
                     }

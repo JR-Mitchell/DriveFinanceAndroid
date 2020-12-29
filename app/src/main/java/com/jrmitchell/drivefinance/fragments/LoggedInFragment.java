@@ -28,34 +28,47 @@ public class LoggedInFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Hide all but progress bar
+        view.findViewById(R.id.logged_in_textview).setVisibility(View.GONE);
+        view.findViewById(R.id.edittext_foldername).setVisibility(View.GONE);
+        view.findViewById(R.id.foldername_button).setVisibility(View.GONE);
         if (FolderUtils.getSingletonInstance().driveServiceNeedsInitialising()) {
             //Redirect to login
             NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_loginFragment);
-        } else if (FolderUtils.getSingletonInstance().driveFolderNeedsSelecting()) {
-            //Hide progress bar
-            view.findViewById(R.id.folder_progress_bar).setVisibility(View.GONE);
-            //Set up button
-            view.findViewById(R.id.foldername_button).setOnClickListener(v -> {
-                view.findViewById(R.id.folder_progress_bar).setVisibility(View.VISIBLE);
-                String inputText = ((EditText) view.findViewById(R.id.edittext_foldername)).getText().toString();
-                FolderUtils.getSingletonInstance().selectDriveFolder(inputText, new SigninCallback() {
-                    @Override
-                    public void success() {
-                        //Redirect to folder
-                        NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
-                    }
+        } else FolderUtils.getSingletonInstance().checkDriveFolderNeedsSelecting(this, new SigninCallback() {
+            @Override
+            public void success() {
+                //Redirect to folder
+                NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
+            }
 
-                    @Override
-                    public void failure() {
-                        //Redirect to login
-                        NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_loginFragment);
-                    }
+            @Override
+            public void failure() {
+                //Hide progress bar, show other elements
+                view.findViewById(R.id.folder_progress_bar).setVisibility(View.GONE);
+                view.findViewById(R.id.logged_in_textview).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.edittext_foldername).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.foldername_button).setVisibility(View.VISIBLE);
+                //Set up button
+                view.findViewById(R.id.foldername_button).setOnClickListener(v -> {
+                    view.findViewById(R.id.folder_progress_bar).setVisibility(View.VISIBLE);
+                    String inputText = ((EditText) view.findViewById(R.id.edittext_foldername)).getText().toString();
+                    FolderUtils.getSingletonInstance().selectDriveFolder(inputText, LoggedInFragment.this, new SigninCallback() {
+                        @Override
+                        public void success() {
+                            //Redirect to folder
+                            NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
+                        }
+
+                        @Override
+                        public void failure() {
+                            //Redirect to login
+                            NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_loginFragment);
+                        }
+                    });
                 });
-            });
-        } else {
-            //Redirect to folder
-            NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
-        }
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 }

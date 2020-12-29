@@ -1,4 +1,4 @@
-package com.jrmitchell.drivefinance;
+package com.jrmitchell.drivefinance.activities;
 
 //Basic android imports
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.jrmitchell.drivefinance.R;
+
 //Google API imports
 
 
@@ -16,7 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
  * Main activity class.
  * Inherits from android AppCompatActivity, and uses android's Fragments system to navigate different tools.
  */
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

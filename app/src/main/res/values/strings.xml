@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DriveFinance</string>
-    <string name="toolbar_top_text">Test Screen</string>
+    <string name="toolbar_top_text">Placeholder</string>
     <string name="open_side_menu">Open side menu</string>
     <string name="not_logged_in_text">Not yet logged into Google Drive</string>
     <string name="now_logged_in_text">Now logged into Google Drive. <br /> Please type in the name of the folder associated with your DriveFinance</string>
@@ -10,4 +10,5 @@
     <string name="folder_name">Folder name</string>
     <string name="loading_folder_contents">Loading folder contents…</string>
     <string name="select_folder">Select folder</string>
+    <string name="folder_name_lookup_key">com.jrmitchell.drivefinance.FOLDER_NAME_LOOKUP_KEY</string>
 </resources>

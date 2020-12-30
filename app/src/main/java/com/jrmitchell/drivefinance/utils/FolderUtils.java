@@ -23,6 +23,11 @@ public class FolderUtils {
 
     private boolean isDriveFolderSelected = false;
     private String driveFolderId;
+    private String driveFolderName;
+
+    public String getDriveFolderName() {
+        return driveFolderName;
+    }
 
     public final Map<String,String> fileDict = new HashMap<>();
 
@@ -68,6 +73,7 @@ public class FolderUtils {
                         editor.apply();
                         isDriveFolderSelected = true;
                         driveFolderId = files.get(0).getId();
+                        driveFolderName = folderName;
                         refreshFolderFiles(callback);
                     } else callback.failure();
                 } else callback.failure();

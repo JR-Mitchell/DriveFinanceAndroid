@@ -2,4 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jrmitchell.drivefinance.activities.LoginActivity">
+    <item android:title="@string/reports" android:id="@+id/menu_item_reports" />
+    <item android:title="@string/payments" android:id="@+id/menu_item_payments" />
 </menu>

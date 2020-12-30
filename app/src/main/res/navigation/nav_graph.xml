@@ -2,50 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/paymentsFragment">
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.LoginFragment"
-        android:label="login_fragment"
-        tools:layout="@layout/login_fragment">
+        android:id="@+id/paymentsFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.PaymentsFragment"
+        android:label="payments_fragment"
+        tools:layout="@layout/payments_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_loggedInFragment"
-            app:destination="@id/loggedInFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_failedLoginFragment"
-            app:destination="@id/failedLoginFragment" />
+            android:id="@+id/action_paymentsFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
     </fragment>
     <fragment
-        android:id="@+id/loggedInFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.LoggedInFragment"
-        android:label="logged_in_fragment"
-        tools:layout="@layout/logged_in_fragment" >
+        android:id="@+id/reportFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.ReportFragment"
+        android:label="report_fragment"
+        tools:layout="@layout/report_fragment" >
         <action
-            android:id="@+id/action_loggedInFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_loggedInFragment_to_folderLoadedFragment"
-            app:destination="@id/folderLoadedFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/failedLoginFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.FailedLoginFragment"
-        android:label="failed_login_fragment"
-        tools:layout="@layout/failed_login_fragment">
-        <action
-            android:id="@+id/action_failedLoginFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/folderLoadedFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.FolderFragment"
-        android:label="folder_loaded_fragment"
-        tools:layout="@layout/folder_loaded_fragment">
-        <action
-            android:id="@+id/action_folderLoadedFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_folderLoadedFragment_to_loggedInFragment"
-            app:destination="@id/loggedInFragment" />
+            android:id="@+id/action_reportFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
 </navigation>

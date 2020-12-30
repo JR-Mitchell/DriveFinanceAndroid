@@ -22,16 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_flow);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //Set up the menu button
-        ImageButton menuButton = findViewById(R.id.menuButton);
-        menuButton.setOnClickListener(v -> {
-            DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
-            drawerLayout.openDrawer(GravityCompat.START,true);
-        });
-
     }
 }

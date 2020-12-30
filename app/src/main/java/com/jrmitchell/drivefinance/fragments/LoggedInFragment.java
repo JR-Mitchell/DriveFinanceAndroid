@@ -1,5 +1,6 @@
 package com.jrmitchell.drivefinance.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.jrmitchell.drivefinance.R;
+import com.jrmitchell.drivefinance.activities.FolderActivity;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 import com.jrmitchell.drivefinance.utils.SigninCallback;
 
@@ -39,7 +41,8 @@ public class LoggedInFragment extends Fragment {
             @Override
             public void success() {
                 //Redirect to folder
-                NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
+                Intent intent = new Intent(getActivity(), FolderActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -57,7 +60,8 @@ public class LoggedInFragment extends Fragment {
                         @Override
                         public void success() {
                             //Redirect to folder
-                            NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_folderLoadedFragment);
+                            Intent intent = new Intent(getActivity(), FolderActivity.class);
+                            startActivity(intent);
                         }
 
                         @Override

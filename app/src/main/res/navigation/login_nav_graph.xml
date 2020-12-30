@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_loggedInFragment"
+            app:destination="@id/loggedInFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_failedLoginFragment"
+            app:destination="@id/failedLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loggedInFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.LoggedInFragment"
+        android:label="logged_in_fragment"
+        tools:layout="@layout/logged_in_fragment" >
+        <action
+            android:id="@+id/action_loggedInFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/failedLoginFragment"
+        android:name="com.jrmitchell.drivefinance.fragments.FailedLoginFragment"
+        android:label="failed_login_fragment"
+        tools:layout="@layout/failed_login_fragment">
+        <action
+            android:id="@+id/action_failedLoginFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>

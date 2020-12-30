@@ -29,6 +29,7 @@
                 android:src="@drawable/ic_baseline_menu_24" />
 
             <TextView
+                android:id="@+id/topBarText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/toolbar_top_text"
@@ -40,8 +41,8 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
-            android:name="androidx.navigation.fragment.NavHostFragment"
             android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
@@ -54,6 +55,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -11,4 +11,8 @@
     <string name="loading_folder_contents">Loading folder contents…</string>
     <string name="select_folder">Select folder</string>
     <string name="folder_name_lookup_key">com.jrmitchell.drivefinance.FOLDER_NAME_LOOKUP_KEY</string>
+    <string name="login_top_text">DriveFinance login process</string>
+    <string name="no_payments_file_found">No Payments file found!</string>
+    <string name="reports">Reports</string>
+    <string name="payments">Payments</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.utils.DriveUtils;
 import com.jrmitchell.drivefinance.utils.SigninCallback;
@@ -36,10 +37,14 @@ public class LoginFragment extends Fragment {
             ActivityResultContract<Intent, ActivityResult> innerContract = new ActivityResultContracts.StartActivityForResult();
             ActivityResultCallback<ActivityResult> innerCallback = innerResult ->
                     NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_loggedInFragment);
-            prepareCall(innerContract,innerCallback);
+            prepareCall(innerContract,innerCallback).launch(intent);
         },"name = 'a' and name = 'b'")
                 .addOnSuccessListener(fileList -> NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_loggedInFragment))
-                .addOnFailureListener(e -> NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_failedLoginFragment));
+                .addOnFailureListener(e -> {
+                    if (!(e instanceof UserRecoverableAuthIOException)) {
+                        NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_loginFragment_to_failedLoginFragment);
+                    }
+                });
     }
 
     @Override

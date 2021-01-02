@@ -13,10 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.activities.LoginActivity;
+import com.jrmitchell.drivefinance.utils.DriveUtils;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
-
-import java.util.Iterator;
-import java.util.Map;
 
 public class PaymentsFragment extends Fragment {
 
@@ -41,7 +39,10 @@ public class PaymentsFragment extends Fragment {
             if (string == null) {
                 ((TextView) view.findViewById(R.id.folder_textview)).setText(R.string.no_payments_file_found);
             } else {
-                ((TextView) view.findViewById(R.id.folder_textview)).setText(string);
+                ((TextView) view.findViewById(R.id.folder_textview)).setText(R.string.reading_payments_file);
+                DriveUtils.getSingletonInstance().getFileTextData(string)
+                        .addOnSuccessListener(content -> ((TextView) view.findViewById(R.id.folder_textview)).setText(content))
+                        .addOnFailureListener(e -> ((TextView) view.findViewById(R.id.folder_textview)).setText(R.string.failed_payments_read));
             }
         }
         super.onViewCreated(view, savedInstanceState);

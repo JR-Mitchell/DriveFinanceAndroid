@@ -18,6 +18,8 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -96,6 +98,25 @@ public final class DriveUtils {
                     .execute();
                 }
         );
+    }
+
+    public Task<String> getFileTextData(String fileId) {
+        return Tasks.call(executor,()->{
+            OutputStream outputStream = new OutputStream() {
+                private final StringBuilder stringBuilder = new StringBuilder();
+
+                @Override
+                public void write(int b) {
+                    this.stringBuilder.append((char) b);
+                }
+
+                public String toString() {
+                    return this.stringBuilder.toString();
+                }
+            };
+            driveService.files().export(fileId,"text/plain").executeMediaAndDownloadTo(outputStream);
+            return outputStream.toString();
+        });
     }
 
 }

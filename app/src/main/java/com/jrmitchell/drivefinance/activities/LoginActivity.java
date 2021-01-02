@@ -2,12 +2,9 @@ package com.jrmitchell.drivefinance.activities;
 
 //Basic android imports
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.jrmitchell.drivefinance.R;
 

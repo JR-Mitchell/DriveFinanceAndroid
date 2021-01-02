@@ -15,4 +15,6 @@
     <string name="no_payments_file_found">No Payments file found!</string>
     <string name="reports">Reports</string>
     <string name="payments">Payments</string>
+    <string name="reading_payments_file">Reading Payments file…</string>
+    <string name="failed_payments_read">Failed to read Payments file</string>
 </resources>

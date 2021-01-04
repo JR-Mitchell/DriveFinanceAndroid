@@ -5,7 +5,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.LoginFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/loggedInFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.LoggedInFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.LoggedInFragment"
         android:label="logged_in_fragment"
         tools:layout="@layout/logged_in_fragment" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/failedLoginFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.FailedLoginFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.FailedLoginFragment"
         android:label="failed_login_fragment"
         tools:layout="@layout/failed_login_fragment">
         <action

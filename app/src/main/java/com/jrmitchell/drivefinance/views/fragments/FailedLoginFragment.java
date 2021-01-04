@@ -1,4 +1,4 @@
-package com.jrmitchell.drivefinance.fragments;
+package com.jrmitchell.drivefinance.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

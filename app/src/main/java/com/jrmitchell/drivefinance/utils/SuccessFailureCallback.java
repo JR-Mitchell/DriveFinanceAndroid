@@ -1,6 +1,6 @@
 package com.jrmitchell.drivefinance.utils;
 
-public interface SigninCallback {
+public interface SuccessFailureCallback {
     void success();
     void failure();
 }

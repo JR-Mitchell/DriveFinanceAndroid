@@ -5,7 +5,7 @@
     app:startDestination="@id/paymentsFragment">
     <fragment
         android:id="@+id/paymentsFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.PaymentsFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.PaymentsFragment"
         android:label="payments_fragment"
         tools:layout="@layout/payments_fragment" >
         <action
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.jrmitchell.drivefinance.fragments.ReportFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.ReportFragment"
         android:label="report_fragment"
         tools:layout="@layout/report_fragment" >
         <action

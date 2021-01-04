@@ -17,4 +17,5 @@
     <string name="payments">Payments</string>
     <string name="reading_payments_file">Reading Payments file…</string>
     <string name="failed_payments_read">Failed to read Payments file</string>
+    <string name="placeholder">Placeholder</string>
 </resources>

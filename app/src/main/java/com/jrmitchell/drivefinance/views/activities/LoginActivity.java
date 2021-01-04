@@ -1,4 +1,4 @@
-package com.jrmitchell.drivefinance.activities;
+package com.jrmitchell.drivefinance.views.activities;
 
 //Basic android imports
 import android.os.Bundle;

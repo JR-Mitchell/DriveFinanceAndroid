@@ -1,4 +1,4 @@
-package com.jrmitchell.drivefinance.fragments;
+package com.jrmitchell.drivefinance.views.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.jrmitchell.drivefinance.R;
-import com.jrmitchell.drivefinance.activities.FolderActivity;
+import com.jrmitchell.drivefinance.views.activities.FolderActivity;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
-import com.jrmitchell.drivefinance.utils.SigninCallback;
+import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
 
 public class LoggedInFragment extends Fragment {
 
@@ -37,7 +37,7 @@ public class LoggedInFragment extends Fragment {
         if (FolderUtils.getSingletonInstance().driveServiceNeedsInitialising()) {
             //Redirect to login
             NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_loginFragment);
-        } else FolderUtils.getSingletonInstance().checkDriveFolderNeedsSelecting(this, new SigninCallback() {
+        } else FolderUtils.getSingletonInstance().checkDriveFolderNeedsSelecting(this, new SuccessFailureCallback() {
             @Override
             public void success() {
                 //Redirect to folder
@@ -56,7 +56,7 @@ public class LoggedInFragment extends Fragment {
                 view.findViewById(R.id.foldername_button).setOnClickListener(v -> {
                     view.findViewById(R.id.folder_progress_bar).setVisibility(View.VISIBLE);
                     String inputText = ((EditText) view.findViewById(R.id.edittext_foldername)).getText().toString();
-                    FolderUtils.getSingletonInstance().selectDriveFolder(inputText, LoggedInFragment.this, new SigninCallback() {
+                    FolderUtils.getSingletonInstance().selectDriveFolder(inputText, LoggedInFragment.this, new SuccessFailureCallback() {
                         @Override
                         public void success() {
                             //Redirect to folder

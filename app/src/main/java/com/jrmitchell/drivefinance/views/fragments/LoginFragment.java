@@ -1,4 +1,4 @@
-package com.jrmitchell.drivefinance.fragments;
+package com.jrmitchell.drivefinance.views.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.utils.DriveUtils;
-import com.jrmitchell.drivefinance.utils.SigninCallback;
+import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
 
 public class LoginFragment extends Fragment {
 
@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment {
         if (DriveUtils.getSingletonInstance().driveServiceNeedsInitialising()) {
             Intent signInIntent = DriveUtils.getSingletonInstance().googleSigninFlow(view.getContext());
             ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
-            ActivityResultCallback<ActivityResult> callback = result -> DriveUtils.getSingletonInstance().initialiseDriveService(view.getContext(), result.getData(), new SigninCallback() {
+            ActivityResultCallback<ActivityResult> callback = result -> DriveUtils.getSingletonInstance().initialiseDriveService(view.getContext(), result.getData(), new SuccessFailureCallback() {
                 @Override
                 public void success() {
                     driveServiceInitialised();

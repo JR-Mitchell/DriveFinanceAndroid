@@ -18,7 +18,6 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.concurrent.Executor;
@@ -56,7 +55,7 @@ public final class DriveUtils {
         return client.getSignInIntent();
     }
 
-    public void initialiseDriveService(Context context, Intent intent, SigninCallback callback) {
+    public void initialiseDriveService(Context context, Intent intent, SuccessFailureCallback callback) {
         GoogleSignIn.getSignedInAccountFromIntent(intent)
                 .addOnSuccessListener(googleAccount -> {
                     Log.d("DriveFinanceDebug","Signed in as " + googleAccount.getEmail());
@@ -79,7 +78,7 @@ public final class DriveUtils {
         });
     }
 
-    public Task<FileList> queryFiles(ActivateIntentCallback callback, String queryString) {
+    public Task<FileList> queryFiles(CallbackInterface<Intent> callback, String queryString) {
         return Tasks.call(executor,()-> {
                 try {
                     return driveService.files()

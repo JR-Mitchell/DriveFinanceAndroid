@@ -44,7 +44,7 @@ public class FolderUtils {
         return  !isDriveFolderSelected;
     }
 
-    public void checkDriveFolderNeedsSelecting(Fragment fragment, SigninCallback callback) {
+    public void checkDriveFolderNeedsSelecting(Fragment fragment, SuccessFailureCallback callback) {
         if (isDriveFolderSelected) callback.success();
         else {
             //If there is a shared preference folder name, select it
@@ -55,7 +55,7 @@ public class FolderUtils {
         }
     }
 
-    public void selectDriveFolder(String folderName, Fragment fragment, SigninCallback callback) {
+    public void selectDriveFolder(String folderName, Fragment fragment, SuccessFailureCallback callback) {
         driveUtils.queryFiles(intent -> { }, "name = '" + folderName + "'")
             .addOnSuccessListener(fileList -> {
                 List<File> files = fileList.getFiles();
@@ -81,7 +81,7 @@ public class FolderUtils {
         .addOnFailureListener(e -> callback.failure());
     }
 
-    public void refreshFolderFiles(SigninCallback callback) {
+    public void refreshFolderFiles(SuccessFailureCallback callback) {
         driveUtils.queryFiles(intent -> {}, "'" + driveFolderId + "' in parents")
                 .addOnSuccessListener(fileList -> {
                     List<File> files = fileList.getFiles();

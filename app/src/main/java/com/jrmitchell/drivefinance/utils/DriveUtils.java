@@ -55,7 +55,7 @@ public final class DriveUtils {
         return client.getSignInIntent();
     }
 
-    public void initialiseDriveService(Context context, Intent intent, SuccessFailureCallback callback) {
+    public void initialiseDriveService(Context context, Intent intent, SuccessFailureCallback<Void> callback) {
         GoogleSignIn.getSignedInAccountFromIntent(intent)
                 .addOnSuccessListener(googleAccount -> {
                     Log.d("DriveFinanceDebug","Signed in as " + googleAccount.getEmail());
@@ -71,7 +71,7 @@ public final class DriveUtils {
                                     .setApplicationName("DriveFinance")
                                     .build();
                     isDriveServiceInitialised = true;
-                    callback.success();
+                    callback.success(null);
                 }).addOnFailureListener(error -> {
                     Log.e("DriveFinanceDebug","Unable to sign in!");
                     callback.failure();

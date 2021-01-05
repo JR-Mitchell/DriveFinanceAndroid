@@ -52,7 +52,7 @@ public class Reports {
                 it.remove();
             }
             //Set up RecyclerView
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.reportRecyclerView);
+            RecyclerView recyclerView = view.findViewById(R.id.reportRecyclerView);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(new ReportAdapter(context,fileDictEntries));
         }

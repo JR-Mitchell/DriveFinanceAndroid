@@ -44,8 +44,8 @@ public class FolderUtils {
         return  !isDriveFolderSelected;
     }
 
-    public void checkDriveFolderNeedsSelecting(Fragment fragment, SuccessFailureCallback callback) {
-        if (isDriveFolderSelected) callback.success();
+    public void checkDriveFolderNeedsSelecting(Fragment fragment, SuccessFailureCallback<Void> callback) {
+        if (isDriveFolderSelected) callback.success(null);
         else {
             //If there is a shared preference folder name, select it
             SharedPreferences sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -55,7 +55,7 @@ public class FolderUtils {
         }
     }
 
-    public void selectDriveFolder(String folderName, Fragment fragment, SuccessFailureCallback callback) {
+    public void selectDriveFolder(String folderName, Fragment fragment, SuccessFailureCallback<Void> callback) {
         driveUtils.queryFiles(intent -> { }, "name = '" + folderName + "'")
             .addOnSuccessListener(fileList -> {
                 List<File> files = fileList.getFiles();
@@ -81,7 +81,7 @@ public class FolderUtils {
         .addOnFailureListener(e -> callback.failure());
     }
 
-    public void refreshFolderFiles(SuccessFailureCallback callback) {
+    public void refreshFolderFiles(SuccessFailureCallback<Void> callback) {
         driveUtils.queryFiles(intent -> {}, "'" + driveFolderId + "' in parents")
                 .addOnSuccessListener(fileList -> {
                     List<File> files = fileList.getFiles();
@@ -91,8 +91,20 @@ public class FolderUtils {
                             fileDict.put(file.getName(),file.getId());
                         }
                     }
-                    callback.success();
+                    callback.success(null);
                 })
                 .addOnFailureListener(e->callback.failure());
+    }
+
+    public void getPaymentsFile(SuccessFailureCallback<String> callback) {
+        String paymentsId = fileDict.get("Payments");
+        if (paymentsId != null) {
+            driveUtils.getFileTextData(paymentsId)
+                    .addOnSuccessListener(callback::success)
+                    .addOnFailureListener(e -> callback.failure());
+
+        } else {
+            callback.failure();
+        }
     }
 }

@@ -37,9 +37,9 @@ public class LoggedInFragment extends Fragment {
         if (FolderUtils.getSingletonInstance().driveServiceNeedsInitialising()) {
             //Redirect to login
             NavHostFragment.findNavController(LoggedInFragment.this).navigate(R.id.action_loggedInFragment_to_loginFragment);
-        } else FolderUtils.getSingletonInstance().checkDriveFolderNeedsSelecting(this, new SuccessFailureCallback() {
+        } else FolderUtils.getSingletonInstance().checkDriveFolderNeedsSelecting(this, new SuccessFailureCallback<Void>() {
             @Override
-            public void success() {
+            public void success(Void avoid) {
                 //Redirect to folder
                 Intent intent = new Intent(getActivity(), FolderActivity.class);
                 startActivity(intent);
@@ -56,9 +56,9 @@ public class LoggedInFragment extends Fragment {
                 view.findViewById(R.id.foldername_button).setOnClickListener(v -> {
                     view.findViewById(R.id.folder_progress_bar).setVisibility(View.VISIBLE);
                     String inputText = ((EditText) view.findViewById(R.id.edittext_foldername)).getText().toString();
-                    FolderUtils.getSingletonInstance().selectDriveFolder(inputText, LoggedInFragment.this, new SuccessFailureCallback() {
+                    FolderUtils.getSingletonInstance().selectDriveFolder(inputText, LoggedInFragment.this, new SuccessFailureCallback<Void>() {
                         @Override
-                        public void success() {
+                        public void success(Void avoid) {
                             //Redirect to folder
                             Intent intent = new Intent(getActivity(), FolderActivity.class);
                             startActivity(intent);

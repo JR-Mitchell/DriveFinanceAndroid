@@ -53,9 +53,9 @@ public class LoginFragment extends Fragment {
         if (DriveUtils.getSingletonInstance().driveServiceNeedsInitialising()) {
             Intent signInIntent = DriveUtils.getSingletonInstance().googleSigninFlow(view.getContext());
             ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
-            ActivityResultCallback<ActivityResult> callback = result -> DriveUtils.getSingletonInstance().initialiseDriveService(view.getContext(), result.getData(), new SuccessFailureCallback() {
+            ActivityResultCallback<ActivityResult> callback = result -> DriveUtils.getSingletonInstance().initialiseDriveService(view.getContext(), result.getData(), new SuccessFailureCallback<Void>() {
                 @Override
-                public void success() {
+                public void success(Void avoid) {
                     driveServiceInitialised();
                 }
 

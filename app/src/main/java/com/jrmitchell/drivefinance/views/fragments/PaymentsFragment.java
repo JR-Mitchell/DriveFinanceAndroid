@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jrmitchell.drivefinance.R;
+import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.viewmodels.Payments;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 
@@ -28,7 +29,10 @@ public class PaymentsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        payments.onViewCreated(view,getActivity(), this::startActivity);
+        payments.onViewCreated(new FragmentWrapper(this,view)
+                .addViewId("textView",R.id.folder_textview),
+                getActivity(),
+                this::startActivity);
         super.onViewCreated(view, savedInstanceState);
     }
 }

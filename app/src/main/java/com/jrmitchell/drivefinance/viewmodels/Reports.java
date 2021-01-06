@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Pair;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.utils.CallbackInterface;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
+import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.views.adapters.ReportAdapter;
 
 import java.util.ArrayList;
@@ -36,7 +32,7 @@ public class Reports {
         this.cls = cls;
     }
 
-    public void onViewCreated(@NonNull View view, Activity activity, Context context, CallbackInterface<Intent> startActivity) {
+    public void onViewCreated(FragmentWrapper fragmentWrapper, Activity activity, Context context, CallbackInterface<Intent> startActivity) {
         if (folderUtils.driveServiceNeedsInitialising() || folderUtils.driveFolderNeedsSelecting()) {
             //Redirect to login
             Intent intent = new Intent(activity, cls);
@@ -52,9 +48,8 @@ public class Reports {
                 it.remove();
             }
             //Set up RecyclerView
-            RecyclerView recyclerView = view.findViewById(R.id.reportRecyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new ReportAdapter(context,fileDictEntries));
+            fragmentWrapper.setupRecyclerView("recyclerView",
+                    new ReportAdapter(context,fileDictEntries));
         }
     }
 }

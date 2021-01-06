@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jrmitchell.drivefinance.R;
+import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.viewmodels.Reports;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 
@@ -28,7 +29,11 @@ public class ReportFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        reports.onViewCreated(view, getActivity(), getContext(), this::startActivity);
+        reports.onViewCreated(new FragmentWrapper(this,view)
+                .addViewId("recyclerView",R.id.reportRecyclerView),
+                getActivity(),
+                getContext(),
+                this::startActivity);
         super.onViewCreated(view, savedInstanceState);
     }
 }

@@ -97,7 +97,7 @@ public class FolderUtils {
     }
 
     public void getPaymentsFile(SuccessFailureCallback<UpdateableFile> callback) {
-        String paymentsId = fileDict.get("Poyments");
+        String paymentsId = fileDict.get("Payments");
         if (paymentsId != null) {
             driveUtils.getFileTextData(paymentsId)
                     .addOnSuccessListener(s -> callback.success(new UpdateableFile(paymentsId,s)))

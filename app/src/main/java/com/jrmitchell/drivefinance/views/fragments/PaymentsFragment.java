@@ -30,8 +30,9 @@ public class PaymentsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         payments.onViewCreated(new FragmentWrapper(this,view)
-                .addViewId("textView",R.id.folder_textview),
+                .addViewId("recyclerView",R.id.paymentsRecyclerView),
                 getActivity(),
+                getContext(),
                 this::startActivity);
         super.onViewCreated(view, savedInstanceState);
     }

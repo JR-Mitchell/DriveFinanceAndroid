@@ -1,6 +1,7 @@
 package com.jrmitchell.drivefinance.viewmodels;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.jrmitchell.drivefinance.R;
@@ -10,6 +11,11 @@ import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
 import com.jrmitchell.drivefinance.utils.UpdateableFile;
 import com.jrmitchell.drivefinance.views.activities.LoginActivity;
+import com.jrmitchell.drivefinance.views.adapters.PaymentLineAdapter;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Non-inheriting class holding behaviour for the
@@ -24,7 +30,19 @@ public class Payments {
         this.folderUtils = folderUtils;
     }
 
-    public void onViewCreated(FragmentWrapper fragmentWrapper, Activity activity, CallbackInterface<Intent> startActivity) {
+    private void setupRecyclerView(FragmentWrapper fragmentWrapper, Context context) {
+        List<String> lines;
+        if (paymentsFile != null) {
+            lines = Arrays.asList(paymentsFile.getContent().split("\n"));
+        } else {
+            lines = Collections.singletonList("Failed to load payments file!");
+        }
+        //Set up RecyclerView
+        fragmentWrapper.setupRecyclerView("recyclerView",
+                new PaymentLineAdapter(context,lines));
+    }
+
+    public void onViewCreated(FragmentWrapper fragmentWrapper, Activity activity, Context context, CallbackInterface<Intent> startActivity) {
         if (folderUtils.driveServiceNeedsInitialising() || folderUtils.driveFolderNeedsSelecting()) {
             //Redirect to login
             Intent intent = new Intent(activity, LoginActivity.class);
@@ -36,12 +54,12 @@ public class Payments {
                 @Override
                 public void success(UpdateableFile content) {
                     paymentsFile = content;
-                    fragmentWrapper.setTextViewText("textView",paymentsFile.getContent());
+                    setupRecyclerView(fragmentWrapper,context);
                 }
 
                 @Override
                 public void failure() {
-                    fragmentWrapper.setTextViewText("textView",R.string.no_payments_file_found);
+                    setupRecyclerView(fragmentWrapper,context);
                 }
             });
         }

@@ -8,6 +8,7 @@ import com.jrmitchell.drivefinance.utils.CallbackInterface;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
+import com.jrmitchell.drivefinance.utils.UpdateableFile;
 import com.jrmitchell.drivefinance.views.activities.LoginActivity;
 
 /**
@@ -17,6 +18,7 @@ import com.jrmitchell.drivefinance.views.activities.LoginActivity;
  */
 public class Payments {
     private final FolderUtils folderUtils;
+    private UpdateableFile paymentsFile;
 
     public Payments(FolderUtils folderUtils) {
         this.folderUtils = folderUtils;
@@ -30,10 +32,11 @@ public class Payments {
         } else {
             fragmentWrapper.setTextViewText("textView",R.string.reading_payments_file);
             //Set up text
-            folderUtils.getPaymentsFile(new SuccessFailureCallback<String>() {
+            folderUtils.getPaymentsFile(new SuccessFailureCallback<UpdateableFile>() {
                 @Override
-                public void success(String content) {
-                    fragmentWrapper.setTextViewText("textView",content);
+                public void success(UpdateableFile content) {
+                    paymentsFile = content;
+                    fragmentWrapper.setTextViewText("textView",paymentsFile.getContent());
                 }
 
                 @Override

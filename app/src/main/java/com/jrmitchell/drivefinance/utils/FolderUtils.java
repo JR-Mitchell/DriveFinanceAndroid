@@ -96,11 +96,11 @@ public class FolderUtils {
                 .addOnFailureListener(e->callback.failure());
     }
 
-    public void getPaymentsFile(SuccessFailureCallback<String> callback) {
-        String paymentsId = fileDict.get("Payments");
+    public void getPaymentsFile(SuccessFailureCallback<UpdateableFile> callback) {
+        String paymentsId = fileDict.get("Poyments");
         if (paymentsId != null) {
             driveUtils.getFileTextData(paymentsId)
-                    .addOnSuccessListener(callback::success)
+                    .addOnSuccessListener(s -> callback.success(new UpdateableFile(paymentsId,s)))
                     .addOnFailureListener(e -> callback.failure());
 
         } else {

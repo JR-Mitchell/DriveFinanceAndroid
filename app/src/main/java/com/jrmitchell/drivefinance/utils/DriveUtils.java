@@ -13,11 +13,15 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.concurrent.Executor;
@@ -115,6 +119,14 @@ public final class DriveUtils {
             };
             driveService.files().export(fileId,"text/plain").executeMediaAndDownloadTo(outputStream);
             return outputStream.toString();
+        });
+    }
+
+    public Task<Void> setFileTextData(String fileId, String newData) {
+        return Tasks.call(executor,()->{
+            InputStream stream = new ByteArrayInputStream(newData.getBytes());
+            driveService.files().update(fileId,new File(),new InputStreamContent("text/plain",stream)).execute();
+            return null;
         });
     }
 

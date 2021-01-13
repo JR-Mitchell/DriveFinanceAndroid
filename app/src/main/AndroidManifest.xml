@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DriveFinance">
         <activity
-            android:name=".views.activities.LoginActivity"
+            android:name=".views.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.DriveFinance.NoActionBar">
             <intent-filter>
@@ -21,8 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.FolderActivity"
-            android:theme="@style/Theme.DriveFinance.NoActionBar"/>
     </application>
 
 </manifest>

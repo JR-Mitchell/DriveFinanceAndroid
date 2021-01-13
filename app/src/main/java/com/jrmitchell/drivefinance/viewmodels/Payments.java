@@ -10,7 +10,6 @@ import com.jrmitchell.drivefinance.utils.FolderUtils;
 import com.jrmitchell.drivefinance.utils.FragmentWrapper;
 import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
 import com.jrmitchell.drivefinance.utils.UpdateableFile;
-import com.jrmitchell.drivefinance.views.activities.LoginActivity;
 import com.jrmitchell.drivefinance.views.adapters.PaymentLineAdapter;
 
 import java.util.Arrays;
@@ -45,8 +44,6 @@ public class Payments {
     public void onViewCreated(FragmentWrapper fragmentWrapper, Activity activity, Context context, CallbackInterface<Intent> startActivity) {
         if (folderUtils.driveServiceNeedsInitialising() || folderUtils.driveFolderNeedsSelecting()) {
             //Redirect to login
-            Intent intent = new Intent(activity, LoginActivity.class);
-            startActivity.run(intent);
         } else {
             fragmentWrapper.setTextViewText("textView",R.string.reading_payments_file);
             //Set up text

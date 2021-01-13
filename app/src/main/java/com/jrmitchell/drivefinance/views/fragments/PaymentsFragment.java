@@ -15,9 +15,6 @@ import com.jrmitchell.drivefinance.viewmodels.Payments;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 
 public class PaymentsFragment extends Fragment {
-
-    private final Payments payments = new Payments(FolderUtils.getSingletonInstance());
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -29,11 +26,6 @@ public class PaymentsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        payments.onViewCreated(new FragmentWrapper(this,view)
-                .addViewId("recyclerView",R.id.paymentsRecyclerView),
-                getActivity(),
-                getContext(),
-                this::startActivity);
         super.onViewCreated(view, savedInstanceState);
     }
 }

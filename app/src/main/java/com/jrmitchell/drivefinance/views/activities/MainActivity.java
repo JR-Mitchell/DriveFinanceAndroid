@@ -1,10 +1,16 @@
 package com.jrmitchell.drivefinance.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,8 +24,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.services.drive.DriveScopes;
 import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.models.DriveRepo;
-import com.jrmitchell.drivefinance.models.Repo;
-import com.jrmitchell.drivefinance.models.RepoFactory;
+import com.jrmitchell.drivefinance.models.DriveRepoInnerClass;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModel;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModelFactory;
 
@@ -51,11 +56,20 @@ public class MainActivity extends AppCompatActivity {
         ).get(MainViewModel.class);
         setUpTopText(viewModel);
 
+        //Set up the repo status handler
+        setUpStatusHandler(viewModel);
+
         //Set up the menu button
         setUpMenuButtonOnClick();
 
         //Set up the menu actions
         setUpMenuSelectionListener();
+    }
+
+    private void getSharedPreferenceFolderName(MainViewModel viewModel) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String folderName = sharedPref.getString(getString(R.string.folder_name_lookup_key), null);
+        viewModel.setFolderName(folderName);
     }
 
     /**
@@ -109,5 +123,61 @@ public class MainActivity extends AppCompatActivity {
             TextView textView = findViewById(R.id.main_activity_toolbar_text);
             textView.setText(string);
         });
+    }
+
+    /**
+     * Sets up the repo status handler
+     *
+     * @param viewModel ViewModel for the main activity
+     */
+    private void setUpStatusHandler(MainViewModel viewModel) {
+        viewModel.getStatusCode().observe(this,statusCode -> {
+            switch (statusCode) {
+                case "DriveRepoSupplyCreds":
+                    try {
+                        ((DriveRepoInnerClass) viewModel.getInnerData()).setCredential(
+                                GoogleAccountCredential.usingOAuth2(
+                                        this,
+                                        Collections.singleton(DriveScopes.DRIVE)
+                                )
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "DriveRepoSupplyClient":
+                    try {
+                        DriveRepoInnerClass data = (DriveRepoInnerClass) viewModel.getInnerData();
+                        data.setClient(GoogleSignIn.getClient(this, data.getSignInOptions()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "DriveRepoRunClientIntent":
+                    try {
+                        DriveRepoInnerClass data = (DriveRepoInnerClass) viewModel.getInnerData();
+                        Intent signInIntent = data.getClientIntent();
+                        ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
+                        ActivityResultCallback<ActivityResult> callback = result -> data.setGSIA(result.getData());
+                        prepareCall(contract, callback).launch(signInIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "DriveRepoAwaitingFolderName":
+                    getSharedPreferenceFolderName(viewModel);
+                    break;
+                case "DriveRepoWriteFolderNameToSharedPrefs":
+                    setSharedPreferenceFolderName(viewModel);
+                    break;
+            }
+        });
+    }
+
+    private void setSharedPreferenceFolderName(MainViewModel viewModel) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.folder_name_lookup_key),viewModel.getFolderName().getValue());
+        editor.apply();
     }
 }

@@ -10,9 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jrmitchell.drivefinance.R;
-import com.jrmitchell.drivefinance.utils.FragmentWrapper;
-import com.jrmitchell.drivefinance.viewmodels.Payments;
-import com.jrmitchell.drivefinance.utils.FolderUtils;
 
 public class PaymentsFragment extends Fragment {
     @Override

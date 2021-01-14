@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.jrmitchell.drivefinance.models.Repo;
 import com.jrmitchell.drivefinance.models.RepoFactory;
 
 import java.lang.reflect.InvocationTargetException;

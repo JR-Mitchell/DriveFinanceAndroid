@@ -17,4 +17,8 @@
     <string name="payments">Payments</string>
     <string name="reading_payments_file">Reading Payments file…</string>
     <string name="placeholder">Placeholder</string>
+    <string name="status_curr_status_code">Current status code: %1s</string>
+    <string name="status_curr_folder_name">Current folder name: %1s</string>
+    <string name="status_set_change_folder_name">Set/change folder name:</string>
+    <string name="set">Set</string>
 </resources>

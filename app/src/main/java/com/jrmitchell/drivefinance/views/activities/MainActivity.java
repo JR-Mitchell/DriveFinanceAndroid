@@ -49,11 +49,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Get an instance of the ViewModel and set up the top text
+        //Get an instance of the ViewModel
         MainViewModel viewModel = new ViewModelProvider(
                 this,
                 new MainViewModelFactory(DriveRepo::new)
         ).get(MainViewModel.class);
+
+        //Set up the folder name handler
         setUpTopText(viewModel);
 
         //Set up the repo status handler

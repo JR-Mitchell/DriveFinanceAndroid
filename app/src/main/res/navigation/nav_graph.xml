@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/paymentsFragment">
+    app:startDestination="@id/statusFragment">
     <fragment
         android:id="@+id/paymentsFragment"
         android:name="com.jrmitchell.drivefinance.views.fragments.PaymentsFragment"
@@ -21,4 +21,9 @@
             android:id="@+id/action_reportFragment_to_paymentsFragment"
             app:destination="@id/paymentsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/statusFragment"
+        android:name="com.jrmitchell.drivefinance.views.fragments.StatusFragment"
+        android:label="status_fragment"
+        tools:layout="@layout/status_fragment" />
 </navigation>

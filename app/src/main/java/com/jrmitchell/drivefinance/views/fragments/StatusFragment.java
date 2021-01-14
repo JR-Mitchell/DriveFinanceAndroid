@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jrmitchell.drivefinance.R;
-import com.jrmitchell.drivefinance.models.DriveRepo;
+import com.jrmitchell.drivefinance.models.FolderRepo;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModel;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModelFactory;
 
@@ -46,7 +46,7 @@ public class StatusFragment extends Fragment {
         if (activity != null) {
             MainViewModel viewModel = new ViewModelProvider(
                     getActivity(),
-                    new MainViewModelFactory(DriveRepo::new)
+                    new MainViewModelFactory(FolderRepo::new)
             ).get(MainViewModel.class);
 
             //Set up the folder name handler

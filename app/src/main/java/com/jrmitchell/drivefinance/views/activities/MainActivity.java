@@ -23,8 +23,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.drive.DriveScopes;
 import com.jrmitchell.drivefinance.R;
-import com.jrmitchell.drivefinance.models.DriveRepo;
-import com.jrmitchell.drivefinance.models.DriveRepoInnerClass;
+import com.jrmitchell.drivefinance.models.DriveRepoInnerData;
+import com.jrmitchell.drivefinance.models.FolderRepo;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModel;
 import com.jrmitchell.drivefinance.viewmodels.MainViewModelFactory;
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //Get an instance of the ViewModel
         MainViewModel viewModel = new ViewModelProvider(
                 this,
-                new MainViewModelFactory(DriveRepo::new)
+                new MainViewModelFactory(FolderRepo::new)
         ).get(MainViewModel.class);
 
         //Set up the folder name handler
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             switch (statusCode) {
                 case "DriveRepoSupplyCreds":
                     try {
-                        ((DriveRepoInnerClass) viewModel.getInnerData()).setCredential(
+                        ((DriveRepoInnerData) viewModel.getInnerData()).setCredential(
                                 GoogleAccountCredential.usingOAuth2(
                                         this,
                                         Collections.singleton(DriveScopes.DRIVE)
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "DriveRepoSupplyClient":
                     try {
-                        DriveRepoInnerClass data = (DriveRepoInnerClass) viewModel.getInnerData();
+                        DriveRepoInnerData data = (DriveRepoInnerData) viewModel.getInnerData();
                         data.setClient(GoogleSignIn.getClient(this, data.getSignInOptions()));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -157,11 +157,22 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "DriveRepoRunClientIntent":
                     try {
-                        DriveRepoInnerClass data = (DriveRepoInnerClass) viewModel.getInnerData();
+                        DriveRepoInnerData data = (DriveRepoInnerData) viewModel.getInnerData();
                         Intent signInIntent = data.getClientIntent();
                         ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
-                        ActivityResultCallback<ActivityResult> callback = result -> data.setGSIA(result.getData());
+                        ActivityResultCallback<ActivityResult> callback = result -> data.setGoogleSignInAccount(result.getData());
                         prepareCall(contract, callback).launch(signInIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "DriveRepoRunRecoverableIntent":
+                    try {
+                        DriveRepoInnerData data = (DriveRepoInnerData) viewModel.getInnerData();
+                        Intent recoverableIntent = data.getClientIntent();
+                        ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
+                        ActivityResultCallback<ActivityResult> callback = result -> {};
+                        prepareCall(contract, callback).launch(recoverableIntent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

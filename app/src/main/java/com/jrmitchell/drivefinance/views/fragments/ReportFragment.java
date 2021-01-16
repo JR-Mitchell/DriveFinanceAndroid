@@ -1,5 +1,6 @@
 package com.jrmitchell.drivefinance.views.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.jrmitchell.drivefinance.R;
-import com.jrmitchell.drivefinance.utils.FragmentWrapper;
-import com.jrmitchell.drivefinance.viewmodels.Reports;
-import com.jrmitchell.drivefinance.utils.FolderUtils;
+import com.jrmitchell.drivefinance.models.FolderRepo;
+import com.jrmitchell.drivefinance.viewmodels.MainViewModel;
+import com.jrmitchell.drivefinance.viewmodels.MainViewModelFactory;
 
 public class ReportFragment extends Fragment {
-
-    private final Reports reports = new Reports(FolderUtils.getSingletonInstance(),ReportFragment.class);
 
     @Override
     public View onCreateView(
@@ -29,11 +29,14 @@ public class ReportFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        reports.onViewCreated(new FragmentWrapper(this,view)
-                .addViewId("recyclerView",R.id.reportRecyclerView),
-                getActivity(),
-                getContext(),
-                this::startActivity);
         super.onViewCreated(view, savedInstanceState);
+        Activity activity = getActivity();
+        if (activity != null) {
+            //Get the main ViewModel
+            MainViewModel viewModel = new ViewModelProvider(
+                    getActivity(),
+                    new MainViewModelFactory(FolderRepo::new)
+            ).get(MainViewModel.class);
+        }
     }
 }

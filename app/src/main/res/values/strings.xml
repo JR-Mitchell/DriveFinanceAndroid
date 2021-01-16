@@ -21,4 +21,5 @@
     <string name="status_curr_folder_name">Current folder name: %1s</string>
     <string name="status_set_change_folder_name">Set/change folder name:</string>
     <string name="set">Set</string>
+    <string name="status">Status</string>
 </resources>

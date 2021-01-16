@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -105,14 +107,24 @@ public class MainActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.menu_item_payments) {
-                //TODO
+                navigateTo(R.id.paymentsFragment);
             } else if (id == R.id.menu_item_reports) {
-                //TODO
-            } else {
-                //TODO
+                navigateTo(R.id.reportFragment);
+            } else if (id == R.id.menu_item_status) {
+                navigateTo(R.id.statusFragment);
             }
             return true;
         });
+    }
+
+    /**
+     * Navigates to the specified fragment
+     *
+     * @param fragmentId the resource id of the fragment to navigate to
+     */
+    private void navigateTo(int fragmentId) {
+        NavController controller = Navigation.findNavController(this,R.id.main_activity_fragment_container);
+        controller.navigate(fragmentId);
     }
 
     /**

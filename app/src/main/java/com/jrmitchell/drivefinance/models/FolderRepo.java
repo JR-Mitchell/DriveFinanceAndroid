@@ -1,12 +1,20 @@
 package com.jrmitchell.drivefinance.models;
 
 import android.util.Log;
+import android.util.Pair;
 
+import com.google.android.gms.tasks.Task;
 import com.google.api.services.drive.model.File;
+import com.jrmitchell.drivefinance.utils.UpdateableFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class FolderRepo extends DriveRepo {
 
@@ -67,5 +75,44 @@ public class FolderRepo extends DriveRepo {
                     });
         }
     }
+
+    public List<Pair<String,String>> getFileMatches(Pattern regexPattern) {
+        List<Pair<String,String>> fileDictEntries = new ArrayList<>();
+        Set<Map.Entry<String,String>> setCopy = new HashSet<>(fileDict.entrySet());
+        Iterator<Map.Entry<String,String>> it = setCopy.iterator();
+        while (it.hasNext()) {
+            Map.Entry<String,String> item = it.next();
+            if (regexPattern.matcher(item.getKey()).matches())
+                fileDictEntries.add(new Pair<>(item.getKey(), item.getValue()));
+            it.remove();
+        }
+        Log.d(TAG,"Number of matches: "+fileDictEntries.size());
+        return fileDictEntries;
+    }
+
+    private Task<UpdateableFile> getTextFile(String fileId) {
+        Task<String> fileTextTask = getFileText(fileId);
+        return fileTextTask.continueWith(task -> {
+            String fileContent = task.getResult();
+            return new UpdateableFile(fileId,fileContent) {
+                @Override
+                public void update(String newContent) {
+                    getFileText(fileId)
+                            .addOnSuccessListener(s -> {
+                                if (s.equals(fileContent)) {
+                                    setFileText(fileId,newContent)
+                                            .addOnSuccessListener(b -> success = b)
+                                            .addOnFailureListener(e -> success = false);
+                                } else {
+                                    success = false;
+                                }
+                            })
+                            .addOnFailureListener(e -> success = false);
+                }
+            };
+        });
+    }
+
+
 
 }

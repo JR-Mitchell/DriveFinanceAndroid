@@ -32,7 +32,7 @@ public class PaymentsFragment extends Fragment {
         Activity activity = getActivity();
         if (activity != null) {
             //Get the main ViewModel
-            MainViewModel viewModel = new ViewModelProvider(
+            MainViewModel mainViewModel = new ViewModelProvider(
                     getActivity(),
                     new MainViewModelFactory(FolderRepo::new)
             ).get(MainViewModel.class);

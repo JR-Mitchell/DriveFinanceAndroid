@@ -8,7 +8,6 @@ import com.jrmitchell.drivefinance.R;
 import com.jrmitchell.drivefinance.utils.CallbackInterface;
 import com.jrmitchell.drivefinance.utils.FolderUtils;
 import com.jrmitchell.drivefinance.utils.FragmentWrapper;
-import com.jrmitchell.drivefinance.utils.SuccessFailureCallback;
 import com.jrmitchell.drivefinance.utils.UpdateableFile;
 import com.jrmitchell.drivefinance.views.adapters.PaymentLineAdapter;
 
@@ -47,7 +46,7 @@ public class Payments {
         } else {
             fragmentWrapper.setTextViewText("textView",R.string.reading_payments_file);
             //Set up text
-            folderUtils.getPaymentsFile(new SuccessFailureCallback<UpdateableFile>() {
+            /*folderUtils.getPaymentsFile(new SuccessFailureCallback<UpdateableFile>() {
                 @Override
                 public void success(UpdateableFile content) {
                     paymentsFile = content;
@@ -58,7 +57,7 @@ public class Payments {
                 public void failure() {
                     setupRecyclerView(fragmentWrapper,context);
                 }
-            });
+            });*/
         }
     }
 }

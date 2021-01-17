@@ -2,6 +2,7 @@ package com.jrmitchell.drivefinance.viewmodels;
 
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +10,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.jrmitchell.drivefinance.models.Repo;
 import com.jrmitchell.drivefinance.models.RepoFactory;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainViewModel extends ViewModel {
     private final Repo repo;
@@ -44,6 +48,16 @@ public class MainViewModel extends ViewModel {
             repo.setFolderName(folderName);
             getFolderName();
         }
+    }
+
+    /**
+     * Gets the name-id pair for each file in the folder whose name matches regexPattern
+     *
+     * @param regexPattern the pattern that a name should have to be included
+     * @return the list of name-id pairs whose name matches regexPattern
+     */
+    public List<Pair<String,String>> getFileMatches(Pattern regexPattern) {
+        return repo.getFileMatches(regexPattern);
     }
 
     /**

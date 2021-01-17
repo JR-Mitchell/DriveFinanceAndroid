@@ -1,8 +1,9 @@
 package com.jrmitchell.drivefinance.utils;
 
-public class UpdateableFile {
+public abstract class UpdateableFile {
     private final String fileId;
     private final String initialContent;
+    protected boolean success = false;
 
     public UpdateableFile(String fileId, String initialContent) {
         this.fileId = fileId;
@@ -13,17 +14,9 @@ public class UpdateableFile {
         return initialContent;
     }
 
-    public void update(String newContent, SuccessFailureCallback<Void> callback) {
-        DriveUtils.getSingletonInstance().getFileTextData(fileId)
-                .addOnSuccessListener(s -> {
-                    if (s.equals(initialContent)) {
-                        DriveUtils.getSingletonInstance().setFileTextData(fileId,newContent)
-                                .addOnSuccessListener(callback::success)
-                                .addOnFailureListener(e -> callback.failure());
-                    } else {
-                        callback.failure();
-                    }
-                })
-                .addOnFailureListener(e -> callback.failure());
+    public boolean success() {
+        return success;
     }
+
+    public abstract void update(String newContent);
 }

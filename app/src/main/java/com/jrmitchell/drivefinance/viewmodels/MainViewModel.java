@@ -51,6 +51,14 @@ public class MainViewModel extends ViewModel {
     }
 
     /**
+     * Sets the repo's folder name to itself
+     */
+    public void reassertRepoFolderName() {
+        String repoFolderName = getFolderName().getValue();
+        setFolderName(repoFolderName);
+    }
+
+    /**
      * Gets the name-id pair for each file in the folder whose name matches regexPattern
      *
      * @param regexPattern the pattern that a name should have to be included

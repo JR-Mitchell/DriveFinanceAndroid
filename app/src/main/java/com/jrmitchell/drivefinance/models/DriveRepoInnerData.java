@@ -25,6 +25,8 @@ public class DriveRepoInnerData implements Repo.InnerData {
 
     protected final String TAG = DriveRepoInnerData.class.getSimpleName();
 
+    protected Intent recoverableAuthIntent;
+
     protected final MutableLiveData<String> status = new MutableLiveData<>("DriveRepoSupplyClient");
 
     @Override
@@ -183,6 +185,15 @@ public class DriveRepoInnerData implements Repo.InnerData {
                 .build();
         Log.i(TAG,"Drive Service constructed");
         status.setValue("DriveRepoAwaitingFolderName");
+    }
+
+    /**
+     * Gets the intent from a recoverableAuthIOException
+     *
+     * @return the recoverable intent
+     */
+    public Intent getRecoverableAuthIntent() {
+        return recoverableAuthIntent;
     }
 
 }

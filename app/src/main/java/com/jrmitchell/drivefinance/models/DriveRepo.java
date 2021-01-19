@@ -1,6 +1,5 @@
 package com.jrmitchell.drivefinance.models;
 
-import android.content.Intent;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -25,8 +24,6 @@ public abstract class DriveRepo implements Repo {
         return innerData;
     }
 
-    protected Intent RecoverableAuthIntent;
-
     //Objects necessary for Google drive queries
     private final Executor executor = Executors.newSingleThreadExecutor();
 
@@ -46,10 +43,10 @@ public abstract class DriveRepo implements Repo {
                         .setSpaces("drive")
                         .execute();
             } catch (UserRecoverableAuthIOException e) {
-                RecoverableAuthIntent = e.getIntent();
-                innerData.status.setValue("DriveRepoRunRecoverableIntent");
+                innerData.recoverableAuthIntent = e.getIntent();
+                innerData.status.postValue("DriveRepoRunRecoverableIntent");
+                throw e;
             }
-            return null;
         });
     }
 

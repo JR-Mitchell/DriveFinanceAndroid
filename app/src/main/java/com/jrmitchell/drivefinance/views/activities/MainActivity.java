@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity {
                 case "DriveRepoRunRecoverableIntent":
                     try {
                         DriveRepoInnerData data = (DriveRepoInnerData) viewModel.getInnerData();
-                        Intent recoverableIntent = data.getClientIntent();
+                        Intent recoverableIntent = data.getRecoverableAuthIntent();
                         ActivityResultContract<Intent, ActivityResult> contract = new ActivityResultContracts.StartActivityForResult();
-                        ActivityResultCallback<ActivityResult> callback = result -> {};
+                        ActivityResultCallback<ActivityResult> callback = result -> viewModel.reassertRepoFolderName();
                         prepareCall(contract, callback).launch(recoverableIntent);
                     } catch (Exception e) {
                         e.printStackTrace();
